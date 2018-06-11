@@ -1,16 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
     <LinearLayout
+        android:id="@+id/gps_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/current_gps_status" />
+
+            <TextView
+                android:id="@+id/gps_status_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="AVAILABLE" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/lat_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="37.58086861769882" />
+
+            <View
+                android:layout_width="12dp"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:id="@+id/lng_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="127.03262410784464" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/button_bar"
-        android:gravity="center">
+        android:layout_below="@id/gps_layout"
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/step_label"
@@ -34,6 +81,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
         android:padding="8dp">
 
         <android.support.v7.widget.AppCompatButton

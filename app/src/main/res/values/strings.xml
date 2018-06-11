@@ -4,7 +4,10 @@
     <string name="step_counter_start">만보기 시작</string>
     <string name="step_counter_stop">만보기 중지</string>
     <string name="step_counter_reset">만보기 초기화</string>
-
     <string name="init_step_number">0</string>
     <string name="step">걸음</string>
+
+    <string name="current_gps_status">현재 GPS 상태 : </string>
+
+    <string name="permission_denied_gps">GPS 기능을 사용하지 않으면 이 앱을 사용하실 수 없습니다.</string>
 </resources>
