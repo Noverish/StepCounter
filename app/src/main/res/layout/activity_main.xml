@@ -19,12 +19,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/current_gps_status" />
+                android:text="@string/current_gps_status"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/gps_status_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="16sp"
                 tools:text="AVAILABLE" />
         </LinearLayout>
 
@@ -37,6 +39,7 @@
                 android:id="@+id/lat_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="16sp"
                 tools:text="37.58086861769882" />
 
             <View
@@ -47,15 +50,16 @@
                 android:id="@+id/lng_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="16sp"
                 tools:text="127.03262410784464" />
         </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/step_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_above="@+id/button_bar"
-        android:layout_below="@id/gps_layout"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -106,4 +110,31 @@
             android:text="@string/step_counter_reset"
             android:textColor="#FFFFFF" />
     </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/step_layout"
+        android:layout_below="@id/gps_layout">
+
+        <FrameLayout
+            android:id="@+id/map_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/map_pin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_location_on_black_24dp"
+                android:visibility="invisible" />
+        </FrameLayout>
+    </FrameLayout>
 </RelativeLayout>

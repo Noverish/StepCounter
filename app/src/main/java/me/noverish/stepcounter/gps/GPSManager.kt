@@ -33,7 +33,7 @@ class GPSManager(private val context: Context) : LocationListener, PermissionLis
     // PermissionListener
     override fun onPermissionGranted() {
         if (ContextCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 1f, this)
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 0f, this)
         } else {
             onPermissionDenied(null)
         }
@@ -46,6 +46,7 @@ class GPSManager(private val context: Context) : LocationListener, PermissionLis
 
     // LocationListener
     override fun onLocationChanged(l: Location?) {
+        println("location $l")
         val location = l ?: return
         callback?.onLocationChanged(location.latitude, location.longitude)
     }

@@ -8,9 +8,11 @@ import android.hardware.SensorManager
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import com.nhn.android.maps.maplib.NGeoPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import me.noverish.stepcounter.gps.GPSCallback
 import me.noverish.stepcounter.gps.GPSManager
+import me.noverish.stepcounter.map.NaverMapFragment
 import me.noverish.stepcounter.step.StepDetector
 import me.noverish.stepcounter.step.StepListener
 
@@ -22,6 +24,8 @@ class MainActivity : AppCompatActivity(), SensorEventListener, StepListener, GPS
     private var isStarted: Boolean = false
 
     private var gpsManager: GPSManager? = null
+
+    private var fragment: NaverMapFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +55,12 @@ class MainActivity : AppCompatActivity(), SensorEventListener, StepListener, GPS
             numSteps = 0
             step_label.text = getString(R.string.init_step_number)
         }
+
+        fragment = NaverMapFragment()
+        supportFragmentManager
+            .beginTransaction()
+            .add(R.id.map_layout, fragment!!)
+            .commit()
     }
 
     // SensorEventListener
@@ -77,5 +87,10 @@ class MainActivity : AppCompatActivity(), SensorEventListener, StepListener, GPS
     override fun onLocationChanged(lat: Double, lng: Double) {
         lat_label.text = lat.toString()
         lng_label.text = lng.toString()
+
+        val point = NGeoPoint(lng, lat)
+
+        fragment?.mapView?.mapController?.animateTo(point)
+        map_pin.visibility = View.VISIBLE
     }
 }
