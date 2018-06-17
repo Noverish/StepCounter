@@ -2,6 +2,9 @@ package me.noverish.stepcounter.utils
 
 import android.app.Activity
 import android.content.Context
+import android.os.AsyncTask
+import kotlinx.android.synthetic.main.activity_record.*
+import me.noverish.stepcounter.R.id.recycler_view
 
 object SharedPreferenceManager {
     private val PREF_NAME = "default"
@@ -28,6 +31,9 @@ object SharedPreferenceManager {
     }
 
     fun getRecords(activity: Activity): List<String> {
+
+
+
         val pref = activity.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
 
         val tmp = pref.getString(RECORD_KEY, "")

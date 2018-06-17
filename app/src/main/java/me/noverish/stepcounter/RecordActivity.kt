@@ -1,5 +1,6 @@
 package me.noverish.stepcounter
 
+import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -9,6 +10,7 @@ import android.view.MenuItem
 import android.view.ViewGroup
 import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_record.*
+import me.noverish.stepcounter.utils.ServerClient
 import me.noverish.stepcounter.utils.SharedPreferenceManager
 
 class RecordActivity : AppCompatActivity() {
@@ -18,11 +20,22 @@ class RecordActivity : AppCompatActivity() {
         setContentView(R.layout.activity_record)
         title = getString(R.string.activity_record_title)
 
-        recycler_view.layoutManager = LinearLayoutManager(this)
-        recycler_view.adapter = Adapter()
+        recycler_view.layoutManager = LinearLayoutManager(this@RecordActivity)
+
+        object : AsyncTask<Void, Void, ArrayList<String>>() {
+            override fun doInBackground(vararg voids: Void): ArrayList<String> {
+                return ServerClient.receive()
+            }
+
+            override fun onPostExecute(result: ArrayList<String>) {
+                super.onPostExecute(result)
+
+                recycler_view.adapter = Adapter(result)
+            }
+        }.execute()
     }
 
-    internal inner class Adapter : RecyclerView.Adapter<Adapter.Holder>() {
+    internal inner class Adapter(private val items: ArrayList<String>) : RecyclerView.Adapter<Adapter.Holder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
             val textView = TextView(this@RecordActivity)
@@ -35,17 +48,11 @@ class RecordActivity : AppCompatActivity() {
 
         override fun onBindViewHolder(holder: Holder, position: Int) {
             val textView = holder.itemView as TextView
-            val strings = SharedPreferenceManager.getRecords(this@RecordActivity)
-
-            println(strings)
-
-            textView.text = strings[position]
+            textView.text = items[position]
         }
 
         override fun getItemCount(): Int {
-            val tmp = SharedPreferenceManager.getRecords(this@RecordActivity).size
-            println("tmp : $tmp")
-            return tmp
+            return items.size
         }
 
         internal inner class Holder(textView: TextView) : RecyclerView.ViewHolder(textView)

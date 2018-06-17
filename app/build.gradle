@@ -35,4 +35,5 @@ dependencies {
 
     implementation 'gun0912.ted:tedpermission:2.2.0'
     implementation 'com.naver.maps.open:naver-map-api:2.1.2@aar'
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
 }

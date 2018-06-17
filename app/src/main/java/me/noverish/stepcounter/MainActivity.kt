@@ -17,7 +17,9 @@ import me.noverish.stepcounter.map.NaverMapFragment
 import me.noverish.stepcounter.step.StepDetector
 import me.noverish.stepcounter.step.StepListener
 import android.content.Intent
+import android.os.AsyncTask
 import android.view.MenuItem
+import me.noverish.stepcounter.utils.ServerClient
 import me.noverish.stepcounter.utils.SharedPreferenceManager
 
 
@@ -89,8 +91,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener, StepListener, GPS
                 val lat = lat_label.text.toString().toDouble()
                 val lng = lng_label.text.toString().toDouble()
 
-                SharedPreferenceManager.putRecords(this, lat, lng, numSteps)
-
+                DataSendAsyncTask(lat, lng, numSteps).execute()
             }
         }
     }
@@ -126,5 +127,14 @@ class MainActivity : AppCompatActivity(), SensorEventListener, StepListener, GPS
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+}
+
+class DataSendAsyncTask(private val lat: Double,
+                        private val lng: Double,
+                        private val step: Int): AsyncTask<Void, Void, Void>() {
+    override fun doInBackground(vararg p0: Void?): Void? {
+        ServerClient.send(lat, lng, step)
+        return null
     }
 }
