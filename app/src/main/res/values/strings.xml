@@ -10,4 +10,6 @@
     <string name="current_gps_status">현재 GPS 상태 : </string>
 
     <string name="permission_denied_gps">GPS 기능을 사용하지 않으면 이 앱을 사용하실 수 없습니다.</string>
+
+    <string name="activity_record_title">기록</string>
 </resources>

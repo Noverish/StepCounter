@@ -7,6 +7,7 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
 import android.view.View
 import com.nhn.android.maps.maplib.NGeoPoint
 import kotlinx.android.synthetic.main.activity_main.*
@@ -15,6 +16,10 @@ import me.noverish.stepcounter.gps.GPSManager
 import me.noverish.stepcounter.map.NaverMapFragment
 import me.noverish.stepcounter.step.StepDetector
 import me.noverish.stepcounter.step.StepListener
+import android.content.Intent
+import android.view.MenuItem
+import me.noverish.stepcounter.utils.SharedPreferenceManager
+
 
 class MainActivity : AppCompatActivity(), SensorEventListener, StepListener, GPSCallback {
 
@@ -77,6 +82,17 @@ class MainActivity : AppCompatActivity(), SensorEventListener, StepListener, GPS
     // StepListener
     override fun step(timeNs: Long) {
         step_label.text = (++numSteps).toString()
+
+        if (numSteps % 50 == 0) {
+            if (lat_label.text.isNotEmpty()) {
+
+                val lat = lat_label.text.toString().toDouble()
+                val lng = lng_label.text.toString().toDouble()
+
+                SharedPreferenceManager.putRecords(this, lat, lng, numSteps)
+
+            }
+        }
     }
 
     // GPSCallback
@@ -92,5 +108,23 @@ class MainActivity : AppCompatActivity(), SensorEventListener, StepListener, GPS
 
         fragment?.mapView?.mapController?.animateTo(point)
         map_pin.visibility = View.VISIBLE
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.menu_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        val menuItem = item ?: return super.onOptionsItemSelected(item)
+
+        return when (menuItem.itemId) {
+            R.id.record -> {
+                startActivity(Intent(this, RecordActivity::class.java))
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 }
