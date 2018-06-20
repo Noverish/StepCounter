@@ -48,6 +48,8 @@ object ServerClient {
             array.add(jsonArray.getString(i))
         }
 
+        array.sort()
+
         return array
     }
 }
